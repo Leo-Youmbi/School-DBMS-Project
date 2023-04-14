@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGN UP - Database Management Systems</title>
+  <link rel="icon" href="images/icon.png">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  
+  <section class="login">
+
+    <form class="form">
+
+      <label for="fullname">Full Name</label>
+      <br>
+      <input type="text" id="fullname" name="fullname" class="input" required>
+      <br>
+      <label for="matricule">Matricule</label><br>
+      <input type="text" id="matricule"name="matricule" class="input" required>
+      <br>
+      <label for="password">Create Password</label>
+      <div>
+        <input type="password" id="password" class="input" required>
+        <div id="see-password" class="input view">view</div>
+
+          <!--  SCRIPT    -->
+
+        <script>
+          let isOpen = false
+          let seePassword = document.querySelector("#see-password")
+          seePassword.addEventListener('click', (element) => {
+            let passwordInput = document.querySelector("#password")
+            if(!isOpen){
+              passwordInput.type = "text"
+              isOpen = true
+            }
+            else {
+              passwordInput.type = "password"
+              isOpen = false
+            }
+          })
+        </script>
+
+          <!--  END OF SCRIPT  -->
+
+      </div>
+      <span id="password-text"></span>
+      <p><span>For your account to be save its better to make a strong password!</span></p>
+      <progress id="progress" value="0" max="100"></progress>
+      <br>
+      <label style="transform: translateY(30px);"> <br> Repeat Password*
+        <input type="password" class="input" id="repeat-password" required>
+      </label>
+
+      <button type="submit">LOG IN</button>
+    </form>
+
+          <!--  SCRIPT  -->
+
+      <script>
+        let regex = [/^[\S]+$/, /[a-z]/g, /[A-Z]/g, /[0-9]/g]
+        let password = document.querySelector("#password")
+        let output = document.querySelector("#password-text")
+        let progress = document.querySelector("#progress")
+        password.addEventListener('input', ()=>{
+          if(password.value.length<8){
+            output.textContent = "Your Password must be atleast 8 characters!"
+            output.style.color = '#c40606'
+            progress.value = "0"
+          }
+
+          else if(password.value.match(regex[0])){
+            progress.value = "25"
+            progress.style.accentColor = "red"
+            output.style.color = "red"
+            if(password.value.match(regex[1])){
+              progress.value = "50"
+              progress.style.accentColor = "coral"
+              if(password.value.match(regex[2])){
+                progress.value = "75"
+                progress.style.accentColor = "blue"
+                output.style.color = "blue"
+                if(password.value.match(regex[3])){
+                  progress.value = "100"
+                  progress.style.accentColor = "green"
+                  output.textContent = "Your Password is OK!"
+                  output.style.color = 'green'
+                }
+                else output.textContent = "Password needs atleast one number"
+              }
+              else output.textContent = "Password needs atleast one uppercase letter"
+            }
+            else output.textContent = "Password needs atleast one lowercase letter"
+          }
+          else output.textContent = "Password should not have whitespaces"
+        });
+      </script>
+      <script>
+        let secondPassword = document.querySelector("#repeat-password")
+        secondPassword.addEventListener("input", ()=>{
+          if (password.value !== secondPassword.value) secondPassword.style.boxShadow = "2px 2px 2px #c40606, -2px -2px 2px #c40606"
+          else secondPassword.style.boxShadow = "1px 1px 2px green, -1px -1px 2px green"
+        })
+      </script>
+          <!--  END OF SCRIPT    -->
+
+  </section>
+
+</body>
+</html>
